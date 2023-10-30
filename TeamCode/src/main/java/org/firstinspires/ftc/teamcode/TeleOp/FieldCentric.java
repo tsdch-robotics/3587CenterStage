@@ -43,6 +43,8 @@ public class FieldCentric extends OpMode {
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
+
+        // reset gyro button
         if (gamepad1.a) {
             gyroResetRequested = true;
         }
@@ -59,29 +61,35 @@ public class FieldCentric extends OpMode {
         double fieldDrive = drive * Math.cos(Math.toRadians(heading)) - strafe * Math.sin(Math.toRadians(heading));
         double fieldStrafe = drive * Math.sin(Math.toRadians(heading)) + strafe * Math.cos(Math.toRadians(heading));
         // Calculate motor powers for mecanum drive
+
         double frontLeftPower = fieldDrive + fieldStrafe + rotate;
         double frontRightPower = fieldDrive - fieldStrafe - rotate;
         double rearLeftPower = fieldDrive - fieldStrafe + rotate;
         double rearRightPower = fieldDrive + fieldStrafe - rotate;
+
         // Ensure motor powers are within the valid range of -1 to 1
         frontLeftPower = Range.clip(frontLeftPower, -1.0, 1.0);
         frontRightPower = Range.clip(frontRightPower, -1.0, 1.0);
         rearLeftPower = Range.clip(rearLeftPower, -1.0, 1.0);
         rearRightPower = Range.clip(rearRightPower, -1.0, 1.0);
+
         // Set motor powers
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         rearLeftMotor.setPower(rearLeftPower);
         rearRightMotor.setPower(rearRightPower);
+
         // Display motor powers on telemetry (optional)
         telemetry.addData("Front Left Power", frontLeftPower);
         telemetry.addData("Front Right Power", frontRightPower);
         telemetry.addData("Rear Left Power", rearLeftPower);
         telemetry.addData("Rear Right Power", rearRightPower);
         telemetry.update();
+
         // Update telemetry and control motors
         telemetry.addData("Gyro Heading", heading);
         telemetry.update();
+        
         }
 
     private double getHeading() {

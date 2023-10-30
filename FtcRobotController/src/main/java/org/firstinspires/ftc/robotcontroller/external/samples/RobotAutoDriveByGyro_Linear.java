@@ -96,7 +96,6 @@ public class RobotAutoDriveByGyro_Linear extends LinearOpMode {
     private DcMotor         leftDrive   = null;
     private DcMotor         rightDrive  = null;
     private IMU             imu         = null;      // Control/Expansion Hub IMU
-
     private double          headingError  = 0;
 
     // These variable are declared here (as class members) so they can be updated in various methods,

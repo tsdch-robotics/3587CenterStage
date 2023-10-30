@@ -15,7 +15,6 @@ public class BasicSlidesPID extends LinearOpMode {
 
      */
     DcMotor lslide;
-    DcMotor rslide;
     double Kp = 0.02;
     double Ki = 0;
     double Kd = 0;
@@ -32,11 +31,9 @@ public class BasicSlidesPID extends LinearOpMode {
     public void runOpMode() {
 
         lslide = hardwareMap.dcMotor.get("lslide");
-        rslide = hardwareMap.dcMotor.get("rslide");
         lslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         waitForStart();
 
         boolean wasYPressed = false;
@@ -73,7 +70,6 @@ public class BasicSlidesPID extends LinearOpMode {
             out = Range.clip(out, -1, 1);
 
             lslide.setPower(out);
-            rslide.setPower(out);
 
             lastError = error;
 
@@ -82,7 +78,7 @@ public class BasicSlidesPID extends LinearOpMode {
         }
 
         lslide.setPower(0);
-        rslide.setPower(0);
+
     }
 
 }
