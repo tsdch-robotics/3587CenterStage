@@ -46,16 +46,16 @@ public class TestAuto extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // They can/should be tweaked to suit the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.4;     // Max driving speed for better distance accuracy.
-    static final double     TURN_SPEED              = 0.2;     // Max Turn speed to limit turn rate
+    static final double     DRIVE_SPEED             = 0.6;     // Max driving speed for better distance accuracy.
+    static final double     TURN_SPEED              = 0.6;     // Max Turn speed to limit turn rate
     static final double     HEADING_THRESHOLD       = 1.0 ;    // How close must the heading get to the target before moving to next step.
     // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
     // Define the Proportional control coefficient (or GAIN) for "heading control".
     // We define one value when Turning (larger errors), and the other is used when Driving straight (smaller errors).
     // Increase these numbers if the heading does not corrects strongly enough (eg: a heavy robot or using tracks)
     // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
-    static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable
-    static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable
+    static final double     P_TURN_GAIN            = 0.04;     // Larger is more responsive, but also less stable
+    static final double     P_DRIVE_GAIN           = 0.04;     // Larger is more responsive, but also less stable
 
 
     @Override
@@ -117,8 +117,7 @@ public class TestAuto extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-        driveStraight(DRIVE_SPEED, 24.0, 0.0);    // Drive Forward 24"
-        turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
+        turnToHeading( TURN_SPEED, 45.0);               // Turn  CW to -45 Degrees
         holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
 
         telemetry.addData("Path", "Complete");
@@ -160,7 +159,6 @@ public class TestAuto extends LinearOpMode {
             BLTarget = BL.getCurrentPosition() + moveCounts;
             FRTarget = FR.getCurrentPosition() + moveCounts;
             BRTarget = BR.getCurrentPosition() + moveCounts;
-
 
             // Set Target FIRST, then turn on RUN_TO_POSITION
             FL.setTargetPosition(FLTarget);
@@ -305,8 +303,8 @@ public class TestAuto extends LinearOpMode {
     }
 
     /**
-     * Take separate drive (fwd/rev) and turn (right/left) requests,
-     * combines them, and applies the appropriate speed commands to the left and right wheel motors.
+     * Take separate drive (fwd/rev) and turn (FR/BR/FL/BL) requests,
+     * combines them, and applies the appropriate speed commands to the FL, BL, FR, and BR wheel motors.
      * @param drive forward motor speed
      * @param turn  clockwise turning motor speed.
      */
