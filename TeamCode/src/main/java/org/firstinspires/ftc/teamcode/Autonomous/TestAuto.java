@@ -117,8 +117,9 @@ public class TestAuto extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-        turnToHeading( TURN_SPEED, 45.0);               // Turn  CW to -45 Degrees
-        holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
+        driveStrafe(DRIVE_SPEED, 10, 0);
+
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -191,7 +192,7 @@ public class TestAuto extends LinearOpMode {
                 moveRobot(driveSpeed, turnSpeed);
 
                 // Display drive status for the driver.
-                sendTelemetry(true);
+
             }
 
             // Stop all motion & Turn off RUN_TO_POSITION
@@ -200,6 +201,62 @@ public class TestAuto extends LinearOpMode {
            BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
            FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
            BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+    }
+    public void driveStrafe(double maxDriveSpeed,
+                              double distance,
+                              double heading) {
+
+        // Ensure that the OpMode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            int moveCounts = (int)(distance * COUNTS_PER_INCH);
+            FLTarget = FL.getCurrentPosition() + moveCounts;
+            BLTarget = BL.getCurrentPosition() - moveCounts;
+            FRTarget = FR.getCurrentPosition() - moveCounts;
+            BRTarget = BR.getCurrentPosition() + moveCounts;
+
+            // Set Target FIRST, then turn on RUN_TO_POSITION
+            FL.setTargetPosition(FLTarget);
+            BL.setTargetPosition(BLTarget);
+            FR.setTargetPosition(FRTarget);
+            BR.setTargetPosition(BRTarget);
+
+            FL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            FR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Set the required driving speed  (must be positive for RUN_TO_POSITION)
+            // Start driving straight, and then enter the control loop
+            maxDriveSpeed = Math.abs(maxDriveSpeed);
+            moveRobot(maxDriveSpeed, 0);
+
+            // keep looping while we are still active, and ALL motors are running.
+            while (opModeIsActive() &&
+                    (FL.isBusy() && BL.isBusy() && FR.isBusy() && BR.isBusy())) {
+
+                // Determine required steering to keep on heading
+                turnSpeed = getSteeringCorrection(heading, P_DRIVE_GAIN);
+
+                // if driving in reverse, the motor correction also needs to be reversed
+                if (distance < 0)
+                    turnSpeed *= -1.0;
+
+                // Apply the turning correction to the current driving speed.
+                moveRobot(driveSpeed, turnSpeed);
+
+                // Display drive status for the driver.
+
+            }
+
+            // Stop all motion & Turn off RUN_TO_POSITION
+            moveRobot(0, 0);
+            FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
     }
 
@@ -278,6 +335,7 @@ public class TestAuto extends LinearOpMode {
         // Stop all motion;
         moveRobot(0, 0);
     }
+
 
     // **********  LOW Level driving functions.  ********************
 
