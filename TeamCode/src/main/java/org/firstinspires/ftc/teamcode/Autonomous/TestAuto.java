@@ -117,9 +117,10 @@ public class TestAuto extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-        driveStrafe(DRIVE_SPEED, 10, 0);
-
-
+        driveStraight(DRIVE_SPEED, 2.5, 0);
+        driveStrafe(DRIVE_SPEED, 25 , 0);
+        //driveStraight(DRIVE_SPEED, 20, 0);
+       //driveStrafe(DRIVE_SPEED, -20, 0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
