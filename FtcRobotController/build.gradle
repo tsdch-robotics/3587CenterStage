@@ -24,3 +24,8 @@ android {
 }
 
 apply from: '../build.dependencies.gradle'
+
+dependencies {
+    implementation 'org.openftc:opencv-repackaged-bundled-dylibs:4.7.0-A'
+}
+dependencies{}
