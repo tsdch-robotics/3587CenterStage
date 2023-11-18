@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -50,7 +48,7 @@ public class BlueDetector extends OpMode {
             @Override
             public void onOpened() {
                 webcam1.startStreaming(1920, 1080, OpenCvCameraRotation.UPRIGHT);
-            }//TODO: adjust width and height baced on specific camera
+            }//TODO: adjust width and height based on specific camera
 
             @Override
             public void onError(int errorCode) {
