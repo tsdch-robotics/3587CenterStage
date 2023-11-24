@@ -85,12 +85,11 @@ public class BlueDetector extends OpMode {
             //Rect rightRect = new Rect(960, 1, 959, 1079);
             Rect leftRect = new Rect(x1, y1, width1 , height1);
             Rect rightRect = new Rect(x2, y2, width2, height2);
+            // Print or log an error message
             if (leftRect.x < 0 || leftRect.y < 0 || leftRect.x + leftRect.width > YCbCr.cols() || leftRect.y + leftRect.height > YCbCr.rows()) {
-                // Print or log an error message
                 telemetry.addLine("LeftRect out of bounds");
             }
             if (rightRect.x < 0 || rightRect.y < 0 || rightRect.x + rightRect.width > YCbCr.cols() || rightRect.y + rightRect.height > YCbCr.rows()) {
-                // Print or log an error message
                 telemetry.addLine("RightRect out of bounds");
             }
             input.copyTo(outPut);

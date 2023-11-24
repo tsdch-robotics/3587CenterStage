@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,10 +11,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class intake extends OpMode {
     //DcMotor intake;
     boolean isTriggerPressed = false;
-    Servo wheel;
-    Servo door;
-    Servo larm;
-    Servo rarm;
+    public Servo wheel;
+    public Servo door;
+   public Servo larm;
+   public Servo rarm;
 
     @Override
     public void init() {
@@ -23,8 +25,10 @@ public class intake extends OpMode {
         rarm = hardwareMap.get(Servo.class, "rarm");
 
 
-        larm.setDirection(Servo.Direction.FORWARD);
+        larm.setDirection(Servo.Direction.REVERSE);
         rarm.setDirection(Servo.Direction.FORWARD);
+        larm.setPosition(0.0);
+        rarm.setPosition(0.0);
     }
 
     public void setwheelPosition(double position) {
@@ -43,13 +47,14 @@ public class intake extends OpMode {
         //   }
         //  }
         if (gamepad1.dpad_left) {
-            larm.setPosition(1.0);
-            rarm.setPosition(1.0);
+            larm.setPosition(0.0);
+            rarm.setPosition(0.0);
         } else {
             telemetry.addData("testing", "true");
         }
         if (gamepad1.dpad_right) {
             rarm.setPosition(1.0);
+            larm.setPosition(1.0);
         } else {
             telemetry.addData("testing2", "true");
         }
