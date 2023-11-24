@@ -49,7 +49,6 @@ public class FieldCentric extends OpMode {
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double rotate = gamepad1.right_stick_x;
-
         // reset gyro button
         if (gamepad1.a) {
             gyroResetRequested = true;

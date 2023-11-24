@@ -23,14 +23,14 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 public class BlueDetector extends OpMode {
 
 
-    public static final int x1 = 300;
+    public static final int x1 = 400;
     public static final int y1 = 300;
-    public static final int width1 = 400;
+    public static final int width1 = 500;
     public static final int height1 = 600;
 
-    public static final int x2 = 1000;
+    public static final int x2 = 500;
     public static final int y2 = 400;
-    public static final int width2 = 400;
+    public static final int width2 = 500;
     public static final int height2 = 600;
 
     OpenCvWebcam webcam1 = null;
@@ -47,7 +47,7 @@ public class BlueDetector extends OpMode {
         webcam1.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                webcam1.startStreaming(1920, 1080, OpenCvCameraRotation.UPRIGHT);
+                webcam1.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
             }//TODO: adjust width and height based on specific camera
 
             @Override
@@ -81,11 +81,18 @@ public class BlueDetector extends OpMode {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
             telemetry.addLine("pipeline running");
 
-            // Rect leftRect = new Rect(1, 1, 959, 1079);
-            //  Rect rightRect = new Rect(960, 1, 959, 1079);
+             //Rect leftRect = new Rect(1, 1, 959, 1079);
+            //Rect rightRect = new Rect(960, 1, 959, 1079);
             Rect leftRect = new Rect(x1, y1, width1 , height1);
             Rect rightRect = new Rect(x2, y2, width2, height2);
-
+            if (leftRect.x < 0 || leftRect.y < 0 || leftRect.x + leftRect.width > YCbCr.cols() || leftRect.y + leftRect.height > YCbCr.rows()) {
+                // Print or log an error message
+                telemetry.addLine("LeftRect out of bounds");
+            }
+            if (rightRect.x < 0 || rightRect.y < 0 || rightRect.x + rightRect.width > YCbCr.cols() || rightRect.y + rightRect.height > YCbCr.rows()) {
+                // Print or log an error message
+                telemetry.addLine("RightRect out of bounds");
+            }
             input.copyTo(outPut);
             Imgproc.rectangle(outPut, leftRect, rectColor, 20);
             Imgproc.rectangle(outPut, rightRect, rectColor, 20);
@@ -102,12 +109,12 @@ public class BlueDetector extends OpMode {
             leftavgfin = leftavg.val[0];
             rightavgfin = rightavg.val[0];
 
-            if (leftavgfin > rightavgfin/* && (Math.abs(leftavgfin-rightavgfin)) >= 1.5*/ ){
+            if (leftavgfin > rightavgfin && (Math.abs(leftavgfin-rightavgfin)) >= 1.5 ){
                 telemetry.addLine("A");
                 telemetry.addData("LeftValue", leftavgfin);
                 telemetry.addData("RightValue", rightavgfin);
             }
-            else if (rightavgfin > leftavgfin/* &&  (Math.abs(leftavgfin-rightavgfin)) >= 1.5*/){
+            else if (rightavgfin > leftavgfin &&  (Math.abs(leftavgfin-rightavgfin)) >= 1.5){
                 telemetry.addLine("B");
                 telemetry.addData("LeftValue", leftavgfin);
                 telemetry.addData("RightValue", rightavgfin);
