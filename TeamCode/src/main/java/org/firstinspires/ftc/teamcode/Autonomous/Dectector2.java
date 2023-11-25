@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
@@ -19,22 +16,24 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime; // Import ElapsedTime
 
 
 
 @Autonomous(group = "drive")
 public class Dectector2 extends LinearOpMode {
-    OpenCvWebcam webcam1 = null;
-    ElapsedTime elapsedTime = new ElapsedTime(); // Add ElapsedTime to track time
-    double totalLeftAvg = 0;
-    double totalRightAvg = 0;
-    double left = 0;
-    double right = 0;
-    int frameCount = 0;
-    int zone = 0;
-    ExamplePipeline examplePipeline;
-
+   public OpenCvWebcam webcam1 = null;
+   public ElapsedTime elapsedTime = new ElapsedTime(); // Add ElapsedTime to track time
+   public double totalLeftAvg = 0;
+   public double totalRightAvg = 0;
+   public double left = 0;
+   public double right = 0;
+   public int frameCount = 0;
+   public int zone = 0;
+   public ExamplePipeline examplePipeline;
+    public Servo AutoFinger;
+    public Servo door;
 
 
 
@@ -45,7 +44,9 @@ public class Dectector2 extends LinearOpMode {
        // Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
 
       //  drive.setPoseEstimate(startPose);
-
+        AutoFinger = hardwareMap.get(Servo.class, "door");
+        AutoFinger.setPosition(0.0);
+        AutoFinger.setDirection(Servo.Direction.REVERSE);
 
 
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam1");
@@ -99,16 +100,19 @@ public class Dectector2 extends LinearOpMode {
         // Use the average values to determine autonomous steps
         if (left > right && (Math.abs(left - right)) >= 1.5) {
             zone = 1;
+            //left
             telemetry.addData("Zone", zone);
             telemetry.addData("Average Left Value", averageLeft);
             telemetry.addData("Average Right Value", averageRight);
             telemetry.update();
 
-            //write your Autonomous specific instructions for this spike mark zobne
+            //write your Autonomous specific instructions for this spike mark zone
+            AutoFinger.setPosition(0.5);
 
 
         } else if (left < right && (Math.abs(left - right)) >= 1.5) {
             zone = 2;
+            //middle
             telemetry.addData("Zone", zone);
             telemetry.addData("Average Left Value", averageLeft);
             telemetry.addData("Average Right Value", averageRight);
@@ -122,6 +126,7 @@ public class Dectector2 extends LinearOpMode {
 
         } else {
             zone = 3;
+            //right
             telemetry.addData("Zone", zone);
 
             telemetry.update();
@@ -159,8 +164,9 @@ public class Dectector2 extends LinearOpMode {
         public Mat processFrame(Mat input) {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
 //specific square size
-            Rect leftRect = new Rect(1, 1, 400, 500);
-            Rect rightRect = new Rect(800, 1, 400, 500);//midile is 640
+            Rect leftRect = new Rect(1, 225, 300, 300);
+            Rect rightRect = new Rect(640, 225, 400, 300);//midile is 640
+            //changing the above 800 to 640
 
             input.copyTo(outPut);
             Imgproc.rectangle(outPut, leftRect, rectColor, 20);

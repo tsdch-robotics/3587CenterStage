@@ -118,7 +118,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
             //          holdHeading() is used after turns to let the heading stabilize
             //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-            turnToHeading(TURN_SPEED, 45);
+
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
