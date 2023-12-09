@@ -46,7 +46,7 @@ public class Dectector2 extends LinearOpMode {
       //  drive.setPoseEstimate(startPose);
         AutoFinger = hardwareMap.get(Servo.class, "door");
         AutoFinger.setPosition(0.0);
-        AutoFinger.setDirection(Servo.Direction.REVERSE);
+        AutoFinger.setDirection(Servo.Direction.FORWARD);
 
 
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam1");
@@ -108,6 +108,7 @@ public class Dectector2 extends LinearOpMode {
 
             //write your Autonomous specific instructions for this spike mark zone
             AutoFinger.setPosition(0.5);
+
 
 
         } else if (left < right && (Math.abs(left - right)) >= 1.5) {

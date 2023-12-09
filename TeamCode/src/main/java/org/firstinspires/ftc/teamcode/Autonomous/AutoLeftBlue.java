@@ -15,7 +15,6 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime; // Import ElapsedTime
 
@@ -32,7 +31,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 @Autonomous(group = "drive")
-public class AutoLeftRed extends LinearOpMode {
+public class AutoLeftBlue extends LinearOpMode {
     public OpenCvWebcam webcam1 = null;
     public ElapsedTime elapsedTime = new ElapsedTime(); // Add ElapsedTime to track time
     public double totalLeftAvg = 0;
@@ -44,9 +43,7 @@ public class AutoLeftRed extends LinearOpMode {
     public ExamplePipeline examplePipeline;
     public Servo AutoFinger;
     public Servo door;
-    public Servo larm;
-    public Servo rarm;
-    public CRServo wheel;
+
     private DcMotor FL = null;
     private DcMotor BL = null;
     private DcMotor FR = null;
@@ -99,13 +96,6 @@ public class AutoLeftRed extends LinearOpMode {
         FR  = hardwareMap.get(DcMotor.class, "FR");
         BR  = hardwareMap.get(DcMotor.class, "BR");
 
-        //wheel = hardwareMap.crservo.get("wheel");
-        //door = hardwareMap.get(Servo.class, "door");
-        //larm = hardwareMap.get(Servo.class, "larm");
-        //rarm = hardwareMap.get(Servo.class, "rarm");
-
-
-
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -113,16 +103,6 @@ public class AutoLeftRed extends LinearOpMode {
         BL.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.FORWARD);
         BR.setDirection(DcMotor.Direction.FORWARD);
-
-        //door.setDirection(Servo.Direction.FORWARD);
-        //larm.setDirection(Servo.Direction.REVERSE);
-        //rarm.setDirection(Servo.Direction.FORWARD);
-        //larm.scaleRange(0.0, 1.0);
-        //rarm.scaleRange(0.0, 1.0);
-        //door.setPosition(0.0);
-        //wheel.setPower(0);
-        //larm.setPosition(0.0);
-        //rarm.setPosition(0.0);
 
         /* The next two lines define Hub orientation.
          * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
@@ -160,7 +140,7 @@ public class AutoLeftRed extends LinearOpMode {
         // Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
 
         //  drive.setPoseEstimate(startPose);
-        AutoFinger = hardwareMap.get(Servo.class, "AutoFinger");
+        AutoFinger = hardwareMap.get(Servo.class, "door");
         AutoFinger.setPosition(0.0);
         AutoFinger.setDirection(Servo.Direction.FORWARD);
 
@@ -185,11 +165,11 @@ public class AutoLeftRed extends LinearOpMode {
             }
         });
         telemetry.addLine("Waiting to start");
-      //  telemetry.update();
+        //  telemetry.update();
         waitForStart();
         // Run for 10 seconds
         telemetry.addLine("started");
-       // telemetry.update();
+        // telemetry.update();
       /*  for (int i = 0; i < 200; i++) { // 200 iterations * 50 milliseconds = 10 seconds
             telemetry.addLine("Measuring Camara stream");
             telemetry.update();
@@ -212,7 +192,7 @@ public class AutoLeftRed extends LinearOpMode {
         double averageRight = right;//totalRightAvg / frameCount;
 
         telemetry.addLine("Returning Values");
-       // telemetry.update();
+        // telemetry.update();
         // Use the average values to determine autonomous steps
         if (left > right && (Math.abs(left - right)) >= 1.5) {
             zone = 1;
@@ -220,23 +200,10 @@ public class AutoLeftRed extends LinearOpMode {
             telemetry.addData("Zone", zone);
             telemetry.addData("Average Left Value", averageLeft);
             telemetry.addData("Average Right Value", averageRight);
-           telemetry.update();
+            telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
-            sleep(800);
-            driveStraight(DRIVE_SPEED, -27, 0);
-            sleep(800);
-            driveStrafe(DRIVE_SPEED, 8, 0);
-            sleep(800);
-            AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 25, 0);
-            sleep(800);
-           turnToHeading(DRIVE_SPEED, -85);
-            sleep(1000);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, 33,  -85);
-            driveStraight(DRIVE_SPEED, -13.5, -90);
+
 
 
         } else if (left < right && (Math.abs(left - right)) >= 1.5) {
@@ -245,23 +212,11 @@ public class AutoLeftRed extends LinearOpMode {
             telemetry.addData("Zone", zone);
             telemetry.addData("Average Left Value", averageLeft);
             telemetry.addData("Average Right Value", averageRight);
-            telemetry.update();
+            // telemetry.update();
 
-            //Auto code
-            AutoFinger.setPosition(0.63);
-            sleep(800);
-            driveStraight(DRIVE_SPEED, -31, 0);
-            driveStrafe(DRIVE_SPEED, -6, 0);
-            sleep(800);
-            AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 28, 0);
-            sleep(800);
-            turnToHeading(DRIVE_SPEED, -85);
-            sleep(800);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, 23,  -85);
-            driveStraight(DRIVE_SPEED, -8, -90);
 
+
+            //write your Autonomous specific instructions for this spike mark zone
 
 
 
@@ -269,27 +224,18 @@ public class AutoLeftRed extends LinearOpMode {
             zone = 3;
             //right
             telemetry.addData("Zone", zone);
-            //telemetry.update();
 
+            //    telemetry.update();
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
-            sleep(800);
-            driveStraight(DRIVE_SPEED, -27, 0);
-            sleep(800);
-            driveStrafe(DRIVE_SPEED, -8, 0);
-            AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 25, 0);
-            sleep(800);
-            turnToHeading(DRIVE_SPEED, -85);
-            sleep(1000);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, 23,  -85);
-            driveStraight(DRIVE_SPEED, -14, -90);
+
+
+
+
         }
 
 
         telemetry.addData("Path", "Complete");
-       // telemetry.update();
+        // telemetry.update();
         sleep(4000);
 
 
@@ -627,7 +573,7 @@ public class AutoLeftRed extends LinearOpMode {
         telemetry.addData("Heading- Target : Current", "%5.2f : %5.0f", targetHeading, getHeading());
         telemetry.addData("Error  : Steer Pwr",  "%5.1f : %5.1f", headingError, turnSpeed);
         telemetry.addData("Wheel Speeds FL:BL:FR:BR", "%5.2f : %5.2f", FLSpeed, BLSpeed, FRSpeed, BRSpeed);
-    //    telemetry.update();
+        //    telemetry.update();
     }
 
     /**
