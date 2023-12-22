@@ -138,7 +138,7 @@ public class AutoRightBlue extends LinearOpMode {
         // Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
 
         //  drive.setPoseEstimate(startPose);
-        AutoFinger = hardwareMap.get(Servo.class, "door");
+        AutoFinger = hardwareMap.get(Servo.class, "AutoFinger");
         AutoFinger.setPosition(0.0);
         AutoFinger.setDirection(Servo.Direction.FORWARD);
 
@@ -192,7 +192,7 @@ public class AutoRightBlue extends LinearOpMode {
         telemetry.addLine("Returning Values");
         // telemetry.update();
         // Use the average values to determine autonomous steps
-        if (left > right && (Math.abs(left - right)) >= 1.5) {
+        if (left > right && (Math.abs(left - right)) >= 2.2) {
             zone = 2;
             //MIDDLE
             telemetry.addData("Zone", zone);
@@ -201,23 +201,21 @@ public class AutoRightBlue extends LinearOpMode {
             telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
+            AutoFinger.setPosition(0.7);
             sleep(800);
             driveStraight(DRIVE_SPEED, -31, 0);
-            driveStrafe(DRIVE_SPEED, 6, 0);
-            sleep(800);
             AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 28, 0);
             sleep(800);
-            turnToHeading(DRIVE_SPEED, 85);
+            driveStraight(DRIVE_SPEED, 28, 0);
+            turnToHeading(DRIVE_SPEED, 90);
             sleep(800);
             driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, -23,  -85);
+            driveStrafe(DRIVE_SPEED, -23,  -90);
             driveStraight(DRIVE_SPEED, -8, -90);
 
 
 
-        } else if (left < right && (Math.abs(left - right)) >= 1.5) {
+        } else if (left < right && (Math.abs(left - right)) >= 2.2) {
             zone = 3;
             //RIGHT
             telemetry.addData("Zone", zone);
@@ -226,20 +224,19 @@ public class AutoRightBlue extends LinearOpMode {
              telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-            //AutoFinger.setPosition(0.63);
-            //sleep(800);
-            //driveStraight(DRIVE_SPEED, -27, 0);
-            //sleep(800);
-            //driveStrafe(DRIVE_SPEED, -8, 0);
-            //AutoFinger.setPosition(0.0);
-            //driveStraight(DRIVE_SPEED, 25, 0);
-            //sleep(800);
-            //turnToHeading(DRIVE_SPEED, 85);
-            //sleep(1000);
-            //driveStraight(DRIVE_SPEED, -100, -85);
-            //driveStrafe(DRIVE_SPEED, -23,  -85);
-            //driveStraight(DRIVE_SPEED, -14, -90);
-
+            AutoFinger.setPosition(0.7);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -27, 0);
+            driveStrafe(DRIVE_SPEED, -12, 0);
+            AutoFinger.setPosition(0.0);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, 25, 0);
+            sleep(800);
+            turnToHeading(DRIVE_SPEED, 85);
+            sleep(1000);
+            driveStraight(DRIVE_SPEED, -100, -85);
+            driveStrafe(DRIVE_SPEED, -23,  -85);
+            driveStraight(DRIVE_SPEED, -14, -90);
 
         } else {
             zone = 1;
@@ -248,20 +245,22 @@ public class AutoRightBlue extends LinearOpMode {
             telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-            //AutoFinger.setPosition(0.63);
-            //sleep(800);
-            //driveStraight(DRIVE_SPEED, -27, 0);
-            //sleep(800);
-            //driveStrafe(DRIVE_SPEED, 8, 0);
-            //sleep(800);
-            //AutoFinger.setPosition(0.0);
-            //driveStraight(DRIVE_SPEED, 25, 0);
-            //sleep(800);
-            //turnToHeading(DRIVE_SPEED, 85);
-            //sleep(1000);
-            //driveStraight(DRIVE_SPEED, -100, -85);
-            //driveStrafe(DRIVE_SPEED, -33,  -85);
-            //driveStraight(DRIVE_SPEED, -13.5, -90);
+            AutoFinger.setPosition(0.7);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -27, 0);
+            turnToHeading(TURN_SPEED, 85);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -8, 90);
+            driveStraight(DRIVE_SPEED, 3, 90);
+            driveStrafe(DRIVE_SPEED, -6, 90);
+            sleep(800);
+            AutoFinger.setPosition(0.0);
+            driveStraight(DRIVE_SPEED, 10, 90);
+            driveStrafe(DRIVE_SPEED, 32, 90);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -90, 90);
+            driveStrafe(DRIVE_SPEED, 7,  90);
+            driveStraight(DRIVE_SPEED, -8, 90);
 
 
 
@@ -296,7 +295,7 @@ public class AutoRightBlue extends LinearOpMode {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
 //specific square size
             Rect leftRect = new Rect(350, 280, 280, 230);
-            Rect rightRect = new Rect(940, 280, 280, 250);//middle is 640
+            Rect rightRect = new Rect(940, 270, 280, 250);//middle is 640
             //changing the above 800 to 640
 
             input.copyTo(outPut);

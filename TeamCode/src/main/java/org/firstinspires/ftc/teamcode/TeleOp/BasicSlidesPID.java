@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -14,25 +16,40 @@ public class BasicSlidesPID extends LinearOpMode {
      * Proportional Integral Derivative Controller
 
      */
-    DcMotor lslide;
-    double Kp = 0.02;
-    double Ki = 0;
-    double Kd = 0;
-
-    double integralSum = 0;
-
-    double lastError = 0;
-    final int CUTOFF = 20;
+    public DcMotor slide;
+    public double Kp = 0.02;
+    public double Ki = 0;
+    public double Kd = 0;
+    public double integralSum = 0;
+    public double lastError = 0;
+    public final int CUTOFF = 20;
 
     // Elapsed timer class from SDK, please use it, it's epic
-    ElapsedTime timer = new ElapsedTime();
+    public ElapsedTime timer = new ElapsedTime();
+    public Servo door;
+    public Servo larm;
+    public Servo rarm;
+    public CRServo wheel;
 
     @Override
     public void runOpMode() {
 
-        lslide = hardwareMap.dcMotor.get("lslide");
-        lslide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lslide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slide = hardwareMap.dcMotor.get("slide");
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        wheel = hardwareMap.crservo.get("wheel");
+        door = hardwareMap.get(Servo.class, "door");
+        larm = hardwareMap.get(Servo.class, "larm");
+        rarm = hardwareMap.get(Servo.class, "rarm");
+        door.setDirection(Servo.Direction.FORWARD);
+        larm.setDirection(Servo.Direction.REVERSE);
+        rarm.setDirection(Servo.Direction.FORWARD);
+        larm.scaleRange(0.0, 1.0);
+        rarm.scaleRange(0.0, 1.0);
+        door.setPosition(0.0);
+        wheel.setPower(0);
+        larm.setPosition(0.0);
+        rarm.setPosition(0.0);
 
         waitForStart();
 
@@ -40,7 +57,7 @@ public class BasicSlidesPID extends LinearOpMode {
         boolean wasBPressed = false;
         while(opModeIsActive()) {
             if(gamepad1.y && !wasYPressed){
-                controlSlides(100);
+                controlSlides(400);
             }
             wasYPressed = gamepad1.y;
 
@@ -53,10 +70,10 @@ public class BasicSlidesPID extends LinearOpMode {
     }
 
     public void controlSlides(int setpoint) {
-        while (opModeIsActive() && Math.abs(lslide.getCurrentPosition() - setpoint) > CUTOFF) {
+        while (opModeIsActive() && Math.abs(slide.getCurrentPosition() - setpoint) > CUTOFF) {
 
             // obtain the encoder position
-            int encoderPosition = lslide.getCurrentPosition();
+            int encoderPosition = slide.getCurrentPosition();
             // calculate the error
             double error = setpoint - encoderPosition;
 
@@ -69,7 +86,7 @@ public class BasicSlidesPID extends LinearOpMode {
             double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
             out = Range.clip(out, -1, 1);
 
-            lslide.setPower(out);
+            slide.setPower(out);
 
             lastError = error;
 
@@ -77,7 +94,7 @@ public class BasicSlidesPID extends LinearOpMode {
             timer.reset();
         }
 
-        lslide.setPower(0);
+        slide.setPower(0);
 
     }
 
