@@ -196,8 +196,8 @@ public class AutoRightBlue extends LinearOpMode {
             zone = 2;
             //MIDDLE
             telemetry.addData("Zone", zone);
-            telemetry.addData("Average Left Value", averageLeft);
-            telemetry.addData("Average Right Value", averageRight);
+            //telemetry.addData("Average Left Value", averageLeft);
+            //telemetry.addData("Average Right Value", averageRight);
             telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
@@ -221,46 +221,47 @@ public class AutoRightBlue extends LinearOpMode {
             zone = 3;
             //RIGHT
             telemetry.addData("Zone", zone);
-            telemetry.addData("Average Left Value", averageLeft);
-            telemetry.addData("Average Right Value", averageRight);
-            // telemetry.update();
+            //telemetry.addData("Average Left Value", averageLeft);
+            //telemetry.addData("Average Right Value", averageRight);
+             telemetry.update();
+
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
-            sleep(800);
-            driveStraight(DRIVE_SPEED, -27, 0);
-            sleep(800);
-            driveStrafe(DRIVE_SPEED, -8, 0);
-            AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 25, 0);
-            sleep(800);
-            turnToHeading(DRIVE_SPEED, 85);
-            sleep(1000);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, -23,  -85);
-            driveStraight(DRIVE_SPEED, -14, -90);
+            //AutoFinger.setPosition(0.63);
+            //sleep(800);
+            //driveStraight(DRIVE_SPEED, -27, 0);
+            //sleep(800);
+            //driveStrafe(DRIVE_SPEED, -8, 0);
+            //AutoFinger.setPosition(0.0);
+            //driveStraight(DRIVE_SPEED, 25, 0);
+            //sleep(800);
+            //turnToHeading(DRIVE_SPEED, 85);
+            //sleep(1000);
+            //driveStraight(DRIVE_SPEED, -100, -85);
+            //driveStrafe(DRIVE_SPEED, -23,  -85);
+            //driveStraight(DRIVE_SPEED, -14, -90);
 
 
         } else {
             zone = 1;
             //LEFT
             telemetry.addData("Zone", zone);
+            telemetry.update();
 
-            //    telemetry.update();
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
-            sleep(800);
-            driveStraight(DRIVE_SPEED, -27, 0);
-            sleep(800);
-            driveStrafe(DRIVE_SPEED, 8, 0);
-            sleep(800);
-            AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 25, 0);
-            sleep(800);
-            turnToHeading(DRIVE_SPEED, 85);
-            sleep(1000);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, -33,  -85);
-            driveStraight(DRIVE_SPEED, -13.5, -90);
+            //AutoFinger.setPosition(0.63);
+            //sleep(800);
+            //driveStraight(DRIVE_SPEED, -27, 0);
+            //sleep(800);
+            //driveStrafe(DRIVE_SPEED, 8, 0);
+            //sleep(800);
+            //AutoFinger.setPosition(0.0);
+            //driveStraight(DRIVE_SPEED, 25, 0);
+            //sleep(800);
+            //turnToHeading(DRIVE_SPEED, 85);
+            //sleep(1000);
+            //driveStraight(DRIVE_SPEED, -100, -85);
+            //driveStrafe(DRIVE_SPEED, -33,  -85);
+            //driveStraight(DRIVE_SPEED, -13.5, -90);
 
 
 
@@ -294,8 +295,8 @@ public class AutoRightBlue extends LinearOpMode {
         public Mat processFrame(Mat input) {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
 //specific square size
-            Rect leftRect = new Rect(1, 225, 300, 300);
-            Rect rightRect = new Rect(640, 225, 400, 300);//midile is 640
+            Rect leftRect = new Rect(350, 280, 280, 230);
+            Rect rightRect = new Rect(940, 280, 280, 250);//middle is 640
             //changing the above 800 to 640
 
             input.copyTo(outPut);
@@ -305,9 +306,9 @@ public class AutoRightBlue extends LinearOpMode {
             leftCrop = YCbCr.submat(leftRect);
             rightCrop = YCbCr.submat(rightRect);
 
-            Core.extractChannel(leftCrop, leftCrop, 1);
-            Core.extractChannel(rightCrop, rightCrop, 1);
-            //coi 1 is red
+            Core.extractChannel(leftCrop, leftCrop, 2);
+            Core.extractChannel(rightCrop, rightCrop, 2);
+            //coi 2 is blue
 
             Scalar leftavg = Core.mean(leftCrop);
             Scalar rightavg = Core.mean(rightCrop);

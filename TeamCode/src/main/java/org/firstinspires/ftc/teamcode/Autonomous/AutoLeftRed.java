@@ -214,7 +214,7 @@ public class AutoLeftRed extends LinearOpMode {
         telemetry.addLine("Returning Values");
        // telemetry.update();
         // Use the average values to determine autonomous steps
-        if (left > right && (Math.abs(left - right)) >= 1.5) {
+        if (left > right && (Math.abs(left - right)) >= 2.0) {
             zone = 1;
             //left
             telemetry.addData("Zone", zone);
@@ -223,7 +223,7 @@ public class AutoLeftRed extends LinearOpMode {
            telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
+            AutoFinger.setPosition(0.7);
             sleep(800);
             driveStraight(DRIVE_SPEED, -27, 0);
             sleep(800);
@@ -235,11 +235,11 @@ public class AutoLeftRed extends LinearOpMode {
            turnToHeading(DRIVE_SPEED, -85);
             sleep(1000);
             driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, 33,  -85);
-            driveStraight(DRIVE_SPEED, -13.5, -90);
+            driveStrafe(DRIVE_SPEED, 33,  -90);
+            driveStraight(DRIVE_SPEED, -8, -90);
 
 
-        } else if (left < right && (Math.abs(left - right)) >= 1.5) {
+        } else if (left < right && (Math.abs(left - right)) >= 2.0) {
             zone = 2;
             //middle
             telemetry.addData("Zone", zone);
@@ -248,18 +248,18 @@ public class AutoLeftRed extends LinearOpMode {
             telemetry.update();
 
             //Auto code
-            AutoFinger.setPosition(0.63);
+            AutoFinger.setPosition(0.7);
             sleep(800);
             driveStraight(DRIVE_SPEED, -31, 0);
-            driveStrafe(DRIVE_SPEED, -6, 0);
+            driveStrafe(DRIVE_SPEED, -5, 0);
             sleep(800);
             AutoFinger.setPosition(0.0);
             driveStraight(DRIVE_SPEED, 28, 0);
             sleep(800);
             turnToHeading(DRIVE_SPEED, -85);
             sleep(800);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, 23,  -85);
+            driveStraight(DRIVE_SPEED, -95, -85);
+            driveStrafe(DRIVE_SPEED, 25,  -90);
             driveStraight(DRIVE_SPEED, -8, -90);
 
 
@@ -269,22 +269,23 @@ public class AutoLeftRed extends LinearOpMode {
             zone = 3;
             //right
             telemetry.addData("Zone", zone);
-            //telemetry.update();
+            telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-            AutoFinger.setPosition(0.63);
+            AutoFinger.setPosition(0.7);
             sleep(800);
             driveStraight(DRIVE_SPEED, -27, 0);
             sleep(800);
-            driveStrafe(DRIVE_SPEED, -8, 0);
-            AutoFinger.setPosition(0.0);
-            driveStraight(DRIVE_SPEED, 25, 0);
-            sleep(800);
             turnToHeading(DRIVE_SPEED, -85);
             sleep(1000);
+            driveStraight(DRIVE_SPEED, -7, -85);
+            AutoFinger.setPosition(0.0);
+            driveStraight(DRIVE_SPEED, 15, -85);
+            driveStrafe(DRIVE_SPEED, -27,-85);
+            sleep(1000);
             driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, 23,  -85);
-            driveStraight(DRIVE_SPEED, -14, -90);
+            driveStrafe(DRIVE_SPEED, 20,  -90);
+            driveStraight(DRIVE_SPEED, -8, -90);
         }
 
 
@@ -315,7 +316,7 @@ public class AutoLeftRed extends LinearOpMode {
         public Mat processFrame(Mat input) {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
 //specific square size
-            Rect leftRect = new Rect(1, 225, 300, 300);
+            Rect leftRect = new Rect(1, 210, 300, 300);
             Rect rightRect = new Rect(640, 225, 400, 300);//midile is 640
             //changing the above 800 to 640
 
