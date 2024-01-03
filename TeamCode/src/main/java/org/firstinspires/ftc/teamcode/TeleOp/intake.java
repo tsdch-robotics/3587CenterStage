@@ -20,7 +20,7 @@ public class intake extends OpMode {
 
     @Override
     public void init() {
-        intake = hardwareMap.dcMotor.get("BL");
+        intake = hardwareMap.dcMotor.get("intake");
         wheel = hardwareMap.crservo.get("wheel");
         door = hardwareMap.get(Servo.class, "door");
         larm = hardwareMap.get(Servo.class, "larm");

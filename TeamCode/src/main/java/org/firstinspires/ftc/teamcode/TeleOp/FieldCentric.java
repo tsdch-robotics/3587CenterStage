@@ -45,6 +45,8 @@ public class FieldCentric extends OpMode {
     }
     @Override
     public void loop() {
+
+
         // Get joystick inputs from the gamepad
         double drive = -gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
