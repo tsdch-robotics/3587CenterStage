@@ -102,23 +102,23 @@ public class FieldOriented2 extends LinearOpMode {
             wasYPressed = gamepad1.dpad_left;
 
             if(gamepad1.dpad_up && !wasYPressed){
-                controlSlides(800);
-                larm.setPosition(1.0);
-                rarm.setPosition(1.0);
+                controlSlides(1200);
+                larm.setPosition(0.75);
+                rarm.setPosition(0.75);
             }
             wasYPressed = gamepad1.dpad_up;
 
             if(gamepad1.dpad_right && !wasYPressed){
-                controlSlides(800);
-                larm.setPosition(1.0);
-                rarm.setPosition(1.0);
+                controlSlides(1400);
+                larm.setPosition(0.75);
+                rarm.setPosition(0.75);
             }
             wasYPressed = gamepad1.dpad_right;
 
             if (gamepad1.dpad_down && !wasBPressed){
                 larm.setPosition(0.0);
                 rarm.setPosition(0.0);
-                sleep(700);
+                sleep(2000);
                 controlSlides(0);
             }
             wasBPressed = gamepad1.dpad_down;
