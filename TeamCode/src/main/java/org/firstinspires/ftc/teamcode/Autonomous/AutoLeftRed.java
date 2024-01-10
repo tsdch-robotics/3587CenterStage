@@ -238,7 +238,8 @@ public class AutoLeftRed extends LinearOpMode {
             driveStrafe(DRIVE_SPEED, 37,  -90);
             driveStraight(DRIVE_SPEED, -10, -90);
             driveStrafe(DRIVE_SPEED, 25, -90);
-            driveStraight(DRIVE_SPEED, -10, -90);
+            turnToHeading(TURN_SPEED, -180);
+
 
 
         } else if (left < right && (Math.abs(left - right)) >= 2.0) {
@@ -264,8 +265,7 @@ public class AutoLeftRed extends LinearOpMode {
             driveStrafe(DRIVE_SPEED, 26,  -90);
             driveStraight(DRIVE_SPEED, -8, -90);
             driveStrafe(DRIVE_SPEED, 29, -90);
-            driveStraight(DRIVE_SPEED, -10, -90);
-
+            turnToHeading(TURN_SPEED, -180);
 
 
 
@@ -291,7 +291,8 @@ public class AutoLeftRed extends LinearOpMode {
             driveStrafe(DRIVE_SPEED, 20,  -90);
             driveStraight(DRIVE_SPEED, -8, -90);
             driveStrafe(DRIVE_SPEED, 33, -90);
-            driveStraight(DRIVE_SPEED, -10, -90);
+            turnToHeading(TURN_SPEED, -180);
+
         }
 
 

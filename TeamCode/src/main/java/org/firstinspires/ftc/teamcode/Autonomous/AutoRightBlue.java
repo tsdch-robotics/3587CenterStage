@@ -196,7 +196,7 @@ public class AutoRightBlue extends LinearOpMode {
             zone = 2;
             //MIDDLE
             telemetry.addData("Zone", zone);
-            //telemetry.addData("Average Left Value", averageLeft);
+            //telemetry.addData("Average Left Value", averageLeft);t
             //telemetry.addData("Average Right Value", averageRight);
             telemetry.update();
 
@@ -206,13 +206,16 @@ public class AutoRightBlue extends LinearOpMode {
             driveStraight(DRIVE_SPEED, -31, 0);
             AutoFinger.setPosition(0.0);
             sleep(800);
-            driveStraight(DRIVE_SPEED, 28, 0);
-            turnToHeading(DRIVE_SPEED, 90);
+            driveStraight(DRIVE_SPEED, 29, 0);
+            turnToHeading(DRIVE_SPEED, 85);
             sleep(800);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, -23,  -90);
-            driveStraight(DRIVE_SPEED, -8, -90);
-
+            driveStraight(DRIVE_SPEED, -95, 90);
+            driveStrafe(DRIVE_SPEED, -26,  90);
+            driveStraight(DRIVE_SPEED, -8, 90);
+            driveStrafe(DRIVE_SPEED, -29, 90);
+            turnToHeading(DRIVE_SPEED, 180);
+            sleep(700);
+            driveStraight(DRIVE_SPEED, -10, 180);
 
 
         } else if (left < right && (Math.abs(left - right)) >= 2.2) {
@@ -234,9 +237,13 @@ public class AutoRightBlue extends LinearOpMode {
             sleep(800);
             turnToHeading(DRIVE_SPEED, 85);
             sleep(1000);
-            driveStraight(DRIVE_SPEED, -100, -85);
-            driveStrafe(DRIVE_SPEED, -23,  -85);
-            driveStraight(DRIVE_SPEED, -14, -90);
+            driveStraight(DRIVE_SPEED, -95, 85);
+            driveStrafe(DRIVE_SPEED, -20,  90);
+            driveStraight(DRIVE_SPEED, -8, 90);
+            driveStrafe(DRIVE_SPEED, -33, 90);
+            turnToHeading(DRIVE_SPEED, 180);
+            sleep(700);
+            driveStraight(DRIVE_SPEED, -10, 180);
 
         } else {
             zone = 1;
@@ -258,9 +265,13 @@ public class AutoRightBlue extends LinearOpMode {
             driveStraight(DRIVE_SPEED, 10, 90);
             driveStrafe(DRIVE_SPEED, 32, 90);
             sleep(800);
-            driveStraight(DRIVE_SPEED, -90, 90);
-            driveStrafe(DRIVE_SPEED, 7,  90);
+            driveStraight(DRIVE_SPEED, -95, 90);
+            driveStrafe(DRIVE_SPEED, -7,  90);
             driveStraight(DRIVE_SPEED, -8, 90);
+            driveStrafe(DRIVE_SPEED, -25, 90);
+            turnToHeading(DRIVE_SPEED, 180);
+            sleep(700);
+            driveStraight(DRIVE_SPEED, -10, 180);
 
 
 
