@@ -15,6 +15,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime; // Import ElapsedTime
 
@@ -42,8 +43,11 @@ public class AutoLeftBlue extends LinearOpMode {
     public int zone = 0;
     public ExamplePipeline examplePipeline;
     public Servo AutoFinger;
+    DcMotor intake;
     public Servo door;
-
+    public Servo larm;
+    public Servo rarm;
+    public CRServo wheel;
     private DcMotor FL = null;
     private DcMotor BL = null;
     private DcMotor FR = null;
@@ -144,6 +148,21 @@ public class AutoLeftBlue extends LinearOpMode {
         AutoFinger.setPosition(0.0);
         AutoFinger.setDirection(Servo.Direction.FORWARD);
 
+        //intake = hardwareMap.dcMotor.get("intake");
+        //wheel = hardwareMap.crservo.get("wheel");
+        //door = hardwareMap.get(Servo.class, "door");
+        //larm = hardwareMap.get(Servo.class, "larm");
+        //rarm = hardwareMap.get(Servo.class, "rarm");
+
+        //door.setDirection(Servo.Direction.FORWARD);
+        //larm.setDirection(Servo.Direction.REVERSE);
+        //rarm.setDirection(Servo.Direction.FORWARD);
+        //larm.scaleRange(0.0, 1.0);
+        //rarm.scaleRange(0.0, 1.0);
+        //door.setPosition(0.0);
+        //wheel.setPower(0);
+        //larm.setPosition(0.0);
+        //rarm.setPosition(0.0);
 
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources()
@@ -203,8 +222,24 @@ public class AutoLeftBlue extends LinearOpMode {
             telemetry.update();
 
             //write your Autonomous specific instructions for this spike mark zone
-
-
+            AutoFinger.setPosition(0.7);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -27, 0);
+            sleep(800);
+            driveStrafe(DRIVE_SPEED, 8, 0);
+            sleep(800);
+            AutoFinger.setPosition(0.0);
+            driveStraight(DRIVE_SPEED, 25, 0);
+            sleep(800);
+            turnToHeading(DRIVE_SPEED, 85);
+            sleep(1000);
+            driveStraight(DRIVE_SPEED, -30, 85);
+            driveStrafe(DRIVE_SPEED, -7,  90);
+            driveStraight(DRIVE_SPEED, -10, 90);
+            driveStrafe(DRIVE_SPEED, -25, 90);
+            turnToHeading(TURN_SPEED, 180);
+            sleep(700);
+            driveStraight(DRIVE_SPEED, -10, 180);
 
         } else if (left < right && (Math.abs(left - right)) >= 1.5) {
             zone = 2;
@@ -214,20 +249,46 @@ public class AutoLeftBlue extends LinearOpMode {
             telemetry.addData("Average Right Value", averageRight);
             // telemetry.update();
 
-
-
             //write your Autonomous specific instructions for this spike mark zone
-
-
+            AutoFinger.setPosition(0.7);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -31, 0);
+            driveStrafe(DRIVE_SPEED, -3, 0);
+            sleep(800);
+            AutoFinger.setPosition(0.0);
+            driveStraight(DRIVE_SPEED, 28, 0);
+            sleep(800);
+            turnToHeading(DRIVE_SPEED, 85);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -25, 85);
+            driveStrafe(DRIVE_SPEED, -30,  90);
+            driveStraight(DRIVE_SPEED, -14, 90);
+            driveStrafe(DRIVE_SPEED, -29, 90);
+            turnToHeading(TURN_SPEED, 180);
 
         } else {
             zone = 3;
             //right
             telemetry.addData("Zone", zone);
-
             //    telemetry.update();
-            //write your Autonomous specific instructions for this spike mark zone
 
+            //write your Autonomous specific instructions for this spike mark zone
+            AutoFinger.setPosition(0.7);
+            sleep(800);
+            driveStraight(DRIVE_SPEED, -27, 0);
+            sleep(800);
+            turnToHeading(DRIVE_SPEED, 85);
+            sleep(1000);
+            driveStraight(DRIVE_SPEED, -7, 85);
+            AutoFinger.setPosition(0.0);
+            driveStraight(DRIVE_SPEED, 15, 90);
+            turnToHeading(TURN_SPEED, 270);
+            sleep(700);
+            driveStraight(DRIVE_SPEED, -28, 270);
+            driveStrafe(DRIVE_SPEED, 19,  270);
+            driveStraight(DRIVE_SPEED, -8, 270);
+            driveStrafe(DRIVE_SPEED, 33, 270);
+            turnToHeading(TURN_SPEED, -180);
 
 
 
@@ -261,8 +322,8 @@ public class AutoLeftBlue extends LinearOpMode {
         public Mat processFrame(Mat input) {
             Imgproc.cvtColor(input, YCbCr, Imgproc.COLOR_RGB2YCrCb);
 //specific square size
-            Rect leftRect = new Rect(1, 225, 300, 300);
-            Rect rightRect = new Rect(640, 225, 400, 300);//midile is 640
+            Rect leftRect = new Rect(350, 280, 280, 230);
+            Rect rightRect = new Rect(940, 270, 280, 250);//middle is 640
             //changing the above 800 to 640
 
             input.copyTo(outPut);
@@ -272,9 +333,9 @@ public class AutoLeftBlue extends LinearOpMode {
             leftCrop = YCbCr.submat(leftRect);
             rightCrop = YCbCr.submat(rightRect);
 
-            Core.extractChannel(leftCrop, leftCrop, 1);
-            Core.extractChannel(rightCrop, rightCrop, 1);
-            //coi 1 is red
+            Core.extractChannel(leftCrop, leftCrop, 2);
+            Core.extractChannel(rightCrop, rightCrop, 2);
+            //coi 2 is blue
 
             Scalar leftavg = Core.mean(leftCrop);
             Scalar rightavg = Core.mean(rightCrop);

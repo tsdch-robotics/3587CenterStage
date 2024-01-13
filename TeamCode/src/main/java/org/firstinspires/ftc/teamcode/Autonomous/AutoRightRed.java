@@ -15,6 +15,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime; // Import ElapsedTime
 
@@ -40,7 +41,11 @@ public class AutoRightRed extends LinearOpMode {
     public int zone = 0;
     public ExamplePipeline examplePipeline;
     public Servo AutoFinger;
+    DcMotor intake;
     public Servo door;
+    public Servo larm;
+    public Servo rarm;
+    public CRServo wheel;
 
     private DcMotor FL = null;
     private DcMotor BL = null;
@@ -141,7 +146,21 @@ public class AutoRightRed extends LinearOpMode {
         AutoFinger = hardwareMap.get(Servo.class, "AutoFinger");
         AutoFinger.setPosition(0.0);
         AutoFinger.setDirection(Servo.Direction.FORWARD);
-
+        //intake = hardwareMap.dcMotor.get("intake");
+        //wheel = hardwareMap.crservo.get("wheel");
+        //door = hardwareMap.get(Servo.class, "door");
+        //larm = hardwareMap.get(Servo.class, "larm");
+        //rarm = hardwareMap.get(Servo.class, "rarm");
+//
+        //door.setDirection(Servo.Direction.FORWARD);
+        //larm.setDirection(Servo.Direction.REVERSE);
+        //rarm.setDirection(Servo.Direction.FORWARD);
+        //larm.scaleRange(0.0, 1.0);
+        //rarm.scaleRange(0.0, 1.0);
+        //door.setPosition(0.0);
+        //wheel.setPower(0);
+        //larm.setPosition(0.0);
+        //rarm.setPosition(0.0);
 
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources()
@@ -214,7 +233,8 @@ public class AutoRightRed extends LinearOpMode {
             driveStraight(DRIVE_SPEED, -25, -85);
             driveStrafe(DRIVE_SPEED, 30,  -90);
             driveStraight(DRIVE_SPEED, -14, -90);
-
+            driveStrafe(DRIVE_SPEED, 29, -90);
+            turnToHeading(TURN_SPEED, -180);
 
 
         } else if (left < right && (Math.abs(left - right)) >= 1.5) {
@@ -239,7 +259,9 @@ public class AutoRightRed extends LinearOpMode {
             sleep(800);
             driveStraight(DRIVE_SPEED, -28, -85);
             driveStrafe(DRIVE_SPEED, 19,  -90);
-            driveStraight(DRIVE_SPEED, -14, -90);
+            driveStraight(DRIVE_SPEED, -8, -90);
+            driveStrafe(DRIVE_SPEED, 33, -90);
+            turnToHeading(TURN_SPEED, -180);
 
 
         } else {
@@ -264,9 +286,10 @@ public class AutoRightRed extends LinearOpMode {
             turnToHeading(TURN_SPEED, 270);
             sleep(800);
             driveStraight(DRIVE_SPEED, -30, 270);
-            driveStrafe(DRIVE_SPEED, 7,  270);
+            driveStrafe(DRIVE_SPEED, 37,  270);
             driveStraight(DRIVE_SPEED, -8, 270);
-
+            driveStrafe(DRIVE_SPEED, 25, -90);
+            turnToHeading(TURN_SPEED, -180);
         }
 
 

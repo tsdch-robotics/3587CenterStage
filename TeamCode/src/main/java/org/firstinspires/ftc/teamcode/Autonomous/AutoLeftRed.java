@@ -43,6 +43,7 @@ public class AutoLeftRed extends LinearOpMode {
     public int zone = 0;
     public ExamplePipeline examplePipeline;
     public Servo AutoFinger;
+    DcMotor intake;
     public Servo door;
     public Servo larm;
     public Servo rarm;
@@ -99,12 +100,6 @@ public class AutoLeftRed extends LinearOpMode {
         FR  = hardwareMap.get(DcMotor.class, "FR");
         BR  = hardwareMap.get(DcMotor.class, "BR");
 
-        //wheel = hardwareMap.crservo.get("wheel");
-        //door = hardwareMap.get(Servo.class, "door");
-        //larm = hardwareMap.get(Servo.class, "larm");
-        //rarm = hardwareMap.get(Servo.class, "rarm");
-
-
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -114,15 +109,6 @@ public class AutoLeftRed extends LinearOpMode {
         FR.setDirection(DcMotor.Direction.FORWARD);
         BR.setDirection(DcMotor.Direction.FORWARD);
 
-        //door.setDirection(Servo.Direction.FORWARD);
-        //larm.setDirection(Servo.Direction.REVERSE);
-        //rarm.setDirection(Servo.Direction.FORWARD);
-        //larm.scaleRange(0.0, 1.0);
-        //rarm.scaleRange(0.0, 1.0);
-        //door.setPosition(0.0);
-        //wheel.setPower(0);
-        //larm.setPosition(0.0);
-        //rarm.setPosition(0.0);
 
         /* The next two lines define Hub orientation.
          * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
@@ -164,6 +150,21 @@ public class AutoLeftRed extends LinearOpMode {
         AutoFinger.setPosition(0.0);
         AutoFinger.setDirection(Servo.Direction.FORWARD);
 
+        //intake = hardwareMap.dcMotor.get("intake");
+        //wheel = hardwareMap.crservo.get("wheel");
+        //door = hardwareMap.get(Servo.class, "door");
+        //larm = hardwareMap.get(Servo.class, "larm");
+        //rarm = hardwareMap.get(Servo.class, "rarm");
+
+        //door.setDirection(Servo.Direction.FORWARD);
+        //larm.setDirection(Servo.Direction.REVERSE);
+        //rarm.setDirection(Servo.Direction.FORWARD);
+        //larm.scaleRange(0.0, 1.0);
+        //rarm.scaleRange(0.0, 1.0);
+        //door.setPosition(0.0);
+        //wheel.setPower(0);
+        //larm.setPosition(0.0);
+        //rarm.setPosition(0.0);
 
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources()

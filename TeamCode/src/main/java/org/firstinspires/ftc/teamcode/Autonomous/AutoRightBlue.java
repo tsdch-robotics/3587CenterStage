@@ -15,6 +15,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime; // Import ElapsedTime
 
@@ -40,7 +41,11 @@ public class AutoRightBlue extends LinearOpMode {
     public int zone = 0;
     public ExamplePipeline examplePipeline;
     public Servo AutoFinger;
+    DcMotor intake;
     public Servo door;
+    public Servo larm;
+    public Servo rarm;
+    public CRServo wheel;
 
     private DcMotor FL = null;
     private DcMotor BL = null;
@@ -142,6 +147,21 @@ public class AutoRightBlue extends LinearOpMode {
         AutoFinger.setPosition(0.0);
         AutoFinger.setDirection(Servo.Direction.FORWARD);
 
+        //intake = hardwareMap.dcMotor.get("intake");
+        //wheel = hardwareMap.crservo.get("wheel");
+        //door = hardwareMap.get(Servo.class, "door");
+        //larm = hardwareMap.get(Servo.class, "larm");
+        //rarm = hardwareMap.get(Servo.class, "rarm");
+
+        //door.setDirection(Servo.Direction.FORWARD);
+        //larm.setDirection(Servo.Direction.REVERSE);
+        //rarm.setDirection(Servo.Direction.FORWARD);
+        //larm.scaleRange(0.0, 1.0);
+        //rarm.scaleRange(0.0, 1.0);
+        //door.setPosition(0.0);
+        //wheel.setPower(0);
+        //larm.setPosition(0.0);
+        //rarm.setPosition(0.0);
 
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam1");
         int cameraMonitorViewId = hardwareMap.appContext.getResources()
