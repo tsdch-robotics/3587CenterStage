@@ -196,7 +196,7 @@ public class AutoRightBlue extends LinearOpMode {
             zone = 2;
             //MIDDLE
             telemetry.addData("Zone", zone);
-            //telemetry.addData("Average Left Value", averageLeft);t
+            //telemetry.addData("Average Left Value", averageLeft);
             //telemetry.addData("Average Right Value", averageRight);
             telemetry.update();
 
